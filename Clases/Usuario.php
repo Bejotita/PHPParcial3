@@ -73,3 +73,4 @@ class Usuario {
         return $stmt->fetch();
     }
 }
+?>

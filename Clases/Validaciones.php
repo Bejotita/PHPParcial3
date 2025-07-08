@@ -31,3 +31,4 @@ class Validaciones {
         return htmlspecialchars(trim($texto), ENT_QUOTES, 'UTF-8');
     }
 }
+?>
