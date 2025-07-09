@@ -1,0 +1,30 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0; padding: 20px;
+    color: #333;
+}
+
+.noticia-completa {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.noticia-completa h1 {
+    margin-bottom: 10px;
+}
+
+.noticia-completa em {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.contenido-noticia {
+    margin-top: 20px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}

@@ -11,6 +11,11 @@ require_once '../clases/Noticia.php';
 
 $noticiaObj = new Noticia();
 $noticias = $noticiaObj->listarTodas();
+
+// Mensajes flash de sesión
+$mensaje = isset($_SESSION['mensaje']) ? $_SESSION['mensaje'] : null;
+$error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+unset($_SESSION['mensaje'], $_SESSION['error']);
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +32,7 @@ $noticias = $noticiaObj->listarTodas();
         Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?> (<?= htmlspecialchars($_SESSION['rol']) ?>)
     </div>
     <nav>
+        <a href="../index.php" class="btn-regresar">← Volver al Inicio</a>
         <a href="formulario_noticia.php" class="btn-crear">Crear Nueva Noticia</a>
         <a href="../logout.php" class="btn-cerrar">Cerrar sesión</a>
     </nav>
@@ -34,6 +40,10 @@ $noticias = $noticiaObj->listarTodas();
 
 <main>
     <h1 class="titulo-principal">Listado de Noticias</h1>
+
+    <?php if ($error): ?>
+        <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
 
     <?php if (count($noticias) > 0): ?>
         <table class="tabla-noticias">
@@ -62,12 +72,14 @@ $noticias = $noticiaObj->listarTodas();
                         <form action="../Procesos/noticia_eliminar.php" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar esta noticia?');">
                             <input type="hidden" name="id" value="<?= $noticia['id'] ?>">
                             <button type="submit" class="btn-eliminar">Eliminar</button>
+
                         </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+
     <?php else: ?>
         <p class="no-noticias">No hay noticias registradas.</p>
     <?php endif; ?>

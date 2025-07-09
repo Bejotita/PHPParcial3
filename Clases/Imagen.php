@@ -45,20 +45,29 @@ class Imagen {
     }
 
     /**
-     * Crea una miniatura redimensionada, manteniendo proporciones
-     * y transparencia en caso de PNG.
+     * Crea una miniatura redimensionada manteniendo proporciones y transparencia PNG.
      */
-    public function crearMiniatura($rutaOriginal, $rutaThumb, $anchoFinal = 300, $altoFinal = 200) {
+    public function crearMiniatura($rutaOriginal, $rutaThumb, $anchoMax = 300, $altoMax = 200) {
         $info = getimagesize($rutaOriginal);
         if (!$info) {
             $this->errores[] = "No se pudo obtener información de la imagen original.";
             return false;
         }
 
-        list($ancho, $alto) = $info;
+        list($anchoOrig, $altoOrig) = $info;
         $tipoMime = $info['mime'];
 
-        // Crear recurso de imagen según el tipo
+        // Calcular proporción para mantener aspecto
+        $ratioOrig = $anchoOrig / $altoOrig;
+        if ($anchoMax / $altoMax > $ratioOrig) {
+            $anchoFinal = (int)($altoMax * $ratioOrig);
+            $altoFinal = $altoMax;
+        } else {
+            $anchoFinal = $anchoMax;
+            $altoFinal = (int)($anchoMax / $ratioOrig);
+        }
+
+        // Crear recurso imagen original
         switch ($tipoMime) {
             case 'image/jpeg':
                 $imagenOrigen = imagecreatefromjpeg($rutaOriginal);
@@ -76,29 +85,37 @@ class Imagen {
             return false;
         }
 
-        // Calcular nueva dimensión proporcional
-        $ratio = min($anchoFinal / $ancho, $altoFinal / $alto);
-        $nuevoAncho = max(1, (int)($ancho * $ratio));
-        $nuevoAlto = max(1, (int)($alto * $ratio));
+        // Crear lienzo para la miniatura
+        $thumb = imagecreatetruecolor($anchoFinal, $altoFinal);
 
-        $thumb = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-        // Preservar transparencia si es PNG
-        if ($tipoMime == 'image/png') {
+        // Preservar transparencia PNG
+        if ($tipoMime === 'image/png') {
             imagealphablending($thumb, false);
             imagesavealpha($thumb, true);
+            $colorTransparente = imagecolorallocatealpha($thumb, 0, 0, 0, 127);
+            imagefill($thumb, 0, 0, $colorTransparente);
+        } else {
+            // Fondo blanco para JPEG
+            $blanco = imagecolorallocate($thumb, 255, 255, 255);
+            imagefill($thumb, 0, 0, $blanco);
         }
 
-        imagecopyresampled($thumb, $imagenOrigen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+        // Redimensionar imagen
+        imagecopyresampled(
+            $thumb, $imagenOrigen,
+            0, 0, 0, 0,
+            $anchoFinal, $altoFinal,
+            $anchoOrig, $altoOrig
+        );
 
-        // Guardar imagen redimensionada
-        $resultado = false;
+        // Guardar miniatura según tipo
+        $guardado = false;
         switch ($tipoMime) {
             case 'image/jpeg':
-                $resultado = imagejpeg($thumb, $rutaThumb, 85);
+                $guardado = imagejpeg($thumb, $rutaThumb, 85);
                 break;
             case 'image/png':
-                $resultado = imagepng($thumb, $rutaThumb, 8);
+                $guardado = imagepng($thumb, $rutaThumb, 8);
                 break;
         }
 
@@ -106,7 +123,7 @@ class Imagen {
         imagedestroy($thumb);
         imagedestroy($imagenOrigen);
 
-        if (!$resultado) {
+        if (!$guardado) {
             $this->errores[] = "Error al guardar la miniatura.";
             return false;
         }
