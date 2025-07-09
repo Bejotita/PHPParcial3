@@ -1,19 +1,16 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once '../clases/Usuario.php';
 require_once '../clases/Validaciones.php';
-
-// Solo permitir acceso si es admin
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $usuarioObj = new Usuario();
 $accion = isset($_POST['accion']) ? $_POST['accion'] : '';
 $errores = [];
 $exito = false;
 
+//file_put_contents(__DIR__ . "/debug.txt", print_r($_POST, true));
 switch ($accion) {
     case 'crear':
         $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : '';
@@ -91,5 +88,5 @@ if (!empty($errores)) {
     $_SESSION['errores_usuario'] = ["No se pudo completar la acción '$accion'."];
 }
 
-header("Location: ../vistas/gestion_usuarios.php");
+header("Location: ../vistas/login.php");
 exit();

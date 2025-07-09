@@ -5,47 +5,54 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-// Si deseas usarlo también para editar, podrías cargar valores aquí
 $titulo = '';
 $contenido = '';
 $errores = isset($_SESSION['errores_noticia']) ? $_SESSION['errores_noticia'] : [];
 unset($_SESSION['errores_noticia']);
-?>
 
-<!DOCTYPE html>
+// Si quieres cargar datos previos para editar, aquí va el código (opcional)
+?>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Registrar Noticia</title>
+    <meta charset="UTF-8" />
+    <title>Publicar Noticia</title>
+    <link rel="stylesheet" href="../css/formulario_noticia.css" />
 </head>
 <body>
-<h2>Publicar Noticia</h2>
 
-<?php if (!empty($errores)): ?>
-    <div style="color: red;">
-        <ul>
-            <?php foreach ($errores as $error): ?>
-                <li><?= htmlspecialchars($error) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
+<header class="form-header">
+    <h1>Publicar Noticia</h1>
+</header>
 
-<form action="../Procesos/noticia_guardar.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario();">
-    <label for="titulo">Título:</label><br>
-    <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($titulo) ?>" required><br><br>
+<main class="form-container">
 
-    <label for="contenido">Contenido:</label><br>
-    <textarea name="contenido" id="contenido" rows="6" required><?= htmlspecialchars($contenido) ?></textarea><br><br>
+    <?php if (!empty($errores)): ?>
+        <div class="error-box">
+            <ul>
+                <?php foreach ($errores as $error): ?>
+                    <li><?= htmlspecialchars($error) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
-    <label for="foto">Imagen (JPG o PNG, máx. 2MB):</label><br>
-    <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" required><br><br>
+    <form action="../Procesos/noticia_guardar.php" method="POST" enctype="multipart/form-data" onsubmit="return validarFormulario();">
+        <label for="titulo">Título:</label>
+        <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($titulo) ?>" required>
 
-    <input type="submit" value="Publicar Noticia">
-</form>
+        <label for="contenido">Contenido:</label>
+        <textarea name="contenido" id="contenido" rows="6" required><?= htmlspecialchars($contenido) ?></textarea>
 
-<br>
-<a href="../index.php">Volver al inicio</a>
+        <label for="foto">Imagen (JPG o PNG, máx. 2MB):</label>
+        <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" required>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-principal">Publicar Noticia</button>
+            <a href="../index.php" class="btn-secundario">Volver al inicio</a>
+        </div>
+    </form>
+
+</main>
 
 <script>
     function validarFormulario() {
@@ -71,5 +78,6 @@ unset($_SESSION['errores_noticia']);
         return true;
     }
 </script>
+
 </body>
 </html>

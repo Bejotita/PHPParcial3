@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
@@ -12,7 +11,6 @@ require_once '../clases/Noticia.php';
 
 $noticiaObj = new Noticia();
 $noticias = $noticiaObj->listarTodas();
-
 ?>
 
 <!DOCTYPE html>
@@ -20,78 +18,61 @@ $noticias = $noticiaObj->listarTodas();
 <head>
     <meta charset="UTF-8" />
     <title>Listado de Noticias</title>
-    <style>
-        /* Estilos básicos solo para presentación */
-        table {
-            border-collapse: collapse;
-            width: 90%;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #999;
-            padding: 8px 12px;
-            text-align: left;
-        }
-        img.thumb {
-            max-width: 120px;
-            height: auto;
-        }
-        .header {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .logout {
-            text-align: right;
-            margin: 10px 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/lista_noticias.css" />
 </head>
 <body>
 
-<div class="logout">
-    Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?> |
-    <a href="../logout.php">Cerrar sesión</a>
-</div>
+<header class="header-container">
+    <div class="usuario-info">
+        Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?> (<?= htmlspecialchars($_SESSION['rol']) ?>)
+    </div>
+    <nav>
+        <a href="formulario_noticia.php" class="btn-crear">Crear Nueva Noticia</a>
+        <a href="../logout.php" class="btn-cerrar">Cerrar sesión</a>
+    </nav>
+</header>
 
-<h2 class="header">Listado de Noticias</h2>
+<main>
+    <h1 class="titulo-principal">Listado de Noticias</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Miniatura</th>
-        <th>Título</th>
-        <th>Fecha</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
     <?php if (count($noticias) > 0): ?>
-        <?php foreach ($noticias as $noticia): ?>
+        <table class="tabla-noticias">
+            <thead>
             <tr>
-                <td>
-                    <?php if (!empty($noticia['ruta_thumb']) && file_exists('../imagenes/thumbs/' . $noticia['ruta_thumb'])): ?>
-                        <img class="thumb" src="../imagenes/thumbs/<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura">
-                    <?php else: ?>
-                        Sin imagen
-                    <?php endif; ?>
-                </td>
-                <td><?= htmlspecialchars($noticia['titulo']) ?></td>
-                <td><?= date('d-m-Y H:i', strtotime($noticia['fecha'])) ?></td>
-                <td>
-                    <a href="formulario_noticia.php?id=<?= $noticia['id'] ?>">Editar</a> |
-                    <a href="../Procesos/noticia_eliminar.php?id=<?= $noticia['id'] ?>" onclick="return confirm('¿Seguro que deseas eliminar esta noticia?');">Eliminar</a>
-                </td>
+                <th>Miniatura</th>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
-        <?php endforeach; ?>
+            </thead>
+            <tbody>
+            <?php foreach ($noticias as $noticia): ?>
+                <tr>
+                    <td class="td-imagen">
+                        <?php if (!empty($noticia['ruta_thumb']) && file_exists('../imagenes/thumbs/' . $noticia['ruta_thumb'])): ?>
+                            <img src="../imagenes/thumbs/<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura" class="thumb">
+                        <?php else: ?>
+                            <span class="sin-imagen">Sin imagen</span>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= htmlspecialchars($noticia['titulo']) ?></td>
+                    <td><?= date('d-m-Y H:i', strtotime($noticia['fecha'])) ?></td>
+                    <td class="td-acciones">
+                        <a href="formulario_noticia.php?id=<?= $noticia['id'] ?>" class="btn-editar">Editar</a>
+                        <form action="../Procesos/noticia_eliminar.php" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar esta noticia?');">
+                            <input type="hidden" name="id" value="<?= $noticia['id'] ?>">
+                            <button type="submit" class="btn-eliminar">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     <?php else: ?>
-        <tr><td colspan="4">No hay noticias registradas.</td></tr>
+        <p class="no-noticias">No hay noticias registradas.</p>
     <?php endif; ?>
-    </tbody>
-</table>
 
-<p style="text-align:center;">
-    <a href="formulario_noticia.php">Crear Nueva Noticia</a>
-</p>
+</main>
 
 </body>
 </html>

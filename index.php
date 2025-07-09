@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario'])) {
     header('Location: vistas/login.php');
     exit();
@@ -12,7 +11,6 @@ require_once 'clases/Noticia.php';
 
 $noticiaObj = new Noticia();
 $noticias = $noticiaObj->listarTodas();
-
 ?>
 
 <!DOCTYPE html>
@@ -20,83 +18,53 @@ $noticias = $noticiaObj->listarTodas();
 <head>
     <meta charset="UTF-8" />
     <title>Inicio - Noticias</title>
-    <style>
-        /* Estilos básicos para mostrar miniaturas */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .header {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .logout {
-            text-align: right;
-            margin-bottom: 10px;
-        }
-        .grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
-        .noticia {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 200px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .noticia img {
-            max-width: 180px;
-            height: auto;
-            display: block;
-            margin: 0 auto 10px;
-        }
-        .noticia-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .noticia-date {
-            font-size: 0.9em;
-            color: #666;
-        }
-        a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css"> <!-- Enlace al CSS externo -->
 </head>
 <body>
 
-<div class="logout">
-    Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?> |
-    <a href="logout.php">Cerrar sesión</a>
-</div>
-
-<h1 class="header">Noticias Recientes</h1>
-
-<?php if (count($noticias) > 0): ?>
-    <div class="grid">
-        <?php foreach ($noticias as $noticia): ?>
-            <div class="noticia">
-                <?php if (!empty($noticia['ruta_thumb']) && file_exists('imagenes/thumbs/' . $noticia['ruta_thumb'])): ?>
-                    <img src="Imagenes/thumbs/<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura">
-                <?php else: ?>
-                    <img src="Imagenes/no-image.png" alt="Sin imagen">
-                <?php endif; ?>
-                <div class="noticia-title"><?= htmlspecialchars($noticia['titulo']) ?></div>
-                <div class="noticia-date"><?= date('d-m-Y H:i', strtotime($noticia['fecha'])) ?></div>
-                <a href="Vistas/formulario_noticia.php?id=<?= $noticia['id'] ?>">Ver / Editar</a>
-            </div>
-        <?php endforeach; ?>
+<header class="header-container">
+    <div class="usuario-info">
+        Usuario: <?= htmlspecialchars($_SESSION['usuario']) ?> (<?= $_SESSION['rol'] ?>)
     </div>
-<?php else: ?>
-    <p style="text-align:center;">No hay noticias para mostrar.</p>
-<?php endif; ?>
+    <nav class="botones-derecha">
+        <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'editor'): ?>
+            <a class="boton" href="Vistas/formulario_noticia.php">Crear Nueva Noticia</a>
+        <?php endif; ?>
+        <a class="boton" href="logout.php">Cerrar sesión</a>
+    </nav>
+</header>
+
+<main class="contenido">
+    <h1 class="header">Noticias Recientes</h1>
+
+    <?php if (count($noticias) > 0): ?>
+        <div class="grid">
+            <?php foreach ($noticias as $noticia): ?>
+                <article class="noticia">
+                    <?php if (!empty($noticia['ruta_thumb']) && file_exists('imagenes/thumbs/' . $noticia['ruta_thumb'])): ?>
+                        <img src="imagenes/thumbs/<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura">
+                    <?php else: ?>
+                        <img src="imagenes/no-image.png" alt="Sin imagen">
+                    <?php endif; ?>
+
+                    <h2 class="noticia-title"><?= htmlspecialchars($noticia['titulo']) ?></h2>
+                    <time class="noticia-date"><?= date('d-m-Y H:i', strtotime($noticia['fecha'])) ?></time>
+
+                    <div class="botones-noticia">
+                        <a href="vistas/formulario_noticia.php?id=<?= $noticia['id'] ?>" class="btn-ver">Ver / Editar</a>
+
+                        <form action="Procesos/noticia_eliminar.php" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar esta noticia?');" class="form-eliminar">
+                            <input type="hidden" name="id" value="<?= $noticia['id'] ?>">
+                            <button type="submit" class="btn-eliminar">Eliminar</button>
+                        </form>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p style="text-align:center;">No hay noticias para mostrar.</p>
+    <?php endif; ?>
+</main>
 
 </body>
 </html>

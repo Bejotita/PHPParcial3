@@ -3,25 +3,25 @@ session_start();
 
 // Verificar que el usuario esté autenticado
 if (!isset($_SESSION['usuario'])) {
-    header('Location: vistas/login.php');
+    header('Location: ../vistas/login.php'); // Corregido: ../ para redireccionar bien
     exit();
 }
 
 require_once '../clases/Conexion.php';
 require_once '../clases/Noticia.php';
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = intval($_GET['id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && is_numeric($_POST['id'])) {
+    $id = intval($_POST['id']);
     $noticia = new Noticia();
 
     // Intentar eliminar (desactivar) la noticia
     if ($noticia->eliminar($id)) {
         $_SESSION['mensaje'] = "Noticia eliminada correctamente.";
     } else {
-        $_SESSION['error'] = "Error al eliminar la noticia.";
+        $_SESSION['error'] = "Ocurrió un error al intentar eliminar la noticia.";
     }
 } else {
-    $_SESSION['error'] = "ID inválido.";
+    $_SESSION['error'] = "ID inválido o acceso no permitido.";
 }
 
 // Redirigir a la lista de noticias
