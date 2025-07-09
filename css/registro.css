@@ -1,6 +1,6 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #eef2f7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambio */
+    background-color: #f8f9fa; /* Cambio */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,43 +8,54 @@ body {
 }
 
 .registro-container {
-    background-color: white;
+    background-color: #ffffff; /* Cambio */
     padding: 35px 45px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Cambio */
+    border: 1px solid #dee2e6; /* Añadido */
     width: 400px;
 }
 
 .registro-container h2 {
     text-align: center;
     margin-bottom: 25px;
-    color: #333;
+    color: #212529; /* Cambio */
 }
 
 .registro-container label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
+    color: #212529; /* Añadido */
 }
 
 .registro-container input,
 .registro-container select {
     width: 100%;
-    padding: 9px;
+    padding: 10px 12px; /* Cambio */
     margin-bottom: 16px;
-    border: 1px solid #ccc;
+    border: 1.5px solid #ced4da; /* Cambio */
     border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Añadido */
+}
+
+.registro-container input:focus,
+.registro-container select:focus {
+    outline: none;
+    border-color: #007bff; /* Añadido */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Añadido */
 }
 
 .registro-container button {
     width: 100%;
-    padding: 11px;
+    padding: 12px; /* Cambio */
     background-color: #28a745;
     color: white;
     border: none;
-    font-weight: bold;
+    font-weight: 600; /* Cambio */
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Cambio */
 }
 
 .registro-container button:hover {

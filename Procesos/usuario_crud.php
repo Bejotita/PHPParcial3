@@ -13,9 +13,9 @@ $exito = false;
 //file_put_contents(__DIR__ . "/debug.txt", print_r($_POST, true));
 switch ($accion) {
     case 'crear':
-        $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : '';
-        $clave   = isset($_POST['clave']) ? $_POST['clave'] : '';
-        $rol     = isset($_POST['rol']) ? $_POST['rol'] : 'editor';
+        $usuario = isset($_POST['usuario']) ? Validaciones::limpiar($_POST['usuario']) : '';
+        $clave   = isset($_POST['clave']) ? Validaciones::limpiar($_POST['clave']) : '';
+        $rol     = isset($_POST['rol']) ? Validaciones::limpiar($_POST['rol']) : 'editor';
 
         if (!Validaciones::usuarioValido($usuario)) {
             $errores[] = "Usuario inválido.";
@@ -34,9 +34,9 @@ switch ($accion) {
 
 
     case 'actualizar':
-        $id      = isset($_POST['id']) ? $_POST['id'] : '';
-        $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : '';
-        $rol     = isset($_POST['rol']) ? $_POST['rol'] : '';
+        $id      = isset($_POST['id']) ? ($_POST['id']) : '';
+        $usuario = isset($_POST['usuario']) ? Validaciones::limpiar($_POST['usuario']) : '';
+        $rol     = isset($_POST['rol']) ? Validaciones::limpiar($_POST['rol']) : '';
 
         if (!Validaciones::usuarioValido($usuario)) {
             $errores[] = "Usuario inválido.";
@@ -52,15 +52,27 @@ switch ($accion) {
         break;
 
     case 'cambiar_clave':
-        $id    = isset($_POST['id']) ? $_POST['id'] : '';
-        $clave = isset($_POST['clave']) ? $_POST['clave'] : '';
+        $id    = isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : '';
+        $usuario = isset($_SESSION['usuario']) ? Validaciones::limpiar($_SESSION['usuario']) : '';
+        $clave_nueva = isset($_POST['nueva']) ? Validaciones::limpiar($_POST['nueva']) : '';
+        $clave_actual = isset($_POST['actual']) ? Validaciones::limpiar($_POST['actual']) : '';
+        $clave_confirmar = isset($_POST['confirmar']) ? Validaciones::limpiar($_POST['confirmar']) : '';
+        $autenticacion = $usuarioObj->autenticar($usuario, $clave_actual);
 
-        if (!Validaciones::claveSegura($clave)) {
+        if (!$autenticacion) {
+            $errores[] = "La contraseña actual es incorrecta.";
+        }
+
+        if ($clave_nueva !== $clave_confirmar) {
+            $errores[] = "Las contraseñas no coinciden.";
+        }
+
+        if (!Validaciones::claveSegura($clave_nueva)) {
             $errores[] = "La nueva contraseña debe tener mínimo 8 caracteres y contener letras y números.";
         }
 
         if (empty($errores)) {
-            $exito = $usuarioObj->cambiarClave($id, $clave);
+            $exito = $usuarioObj->cambiarClave($id, $clave_nueva);
         }
         break;
 
@@ -88,5 +100,5 @@ if (!empty($errores)) {
     $_SESSION['errores_usuario'] = ["No se pudo completar la acción '$accion'."];
 }
 
-header("Location: ../vistas/login.php");
+header("Location: ../Vistas/login.php");
 exit();

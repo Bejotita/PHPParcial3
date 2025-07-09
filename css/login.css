@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambio */
+    background-color: #f8f9fa; /* Cambio */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,43 +8,54 @@ body {
 }
 
 .login-container {
-    background-color: white;
+    background-color: #ffffff; /* Cambio */
     padding: 30px 40px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Cambio */
+    border: 1px solid #dee2e6; /* Añadido */
     width: 350px;
 }
 
 .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #212529; /* Añadido */
 }
 
 .login-container label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600; /* Cambio */
+    color: #212529; /* Añadido */
 }
 
 .login-container input {
     width: 100%;
-    padding: 8px;
+    padding: 10px 12px; /* Cambio */
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1.5px solid #ced4da; /* Cambio */
+    border-radius: 6px; /* Cambio */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Añadido */
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: #007bff; /* Añadido */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Añadido */
 }
 
 .login-container button {
     width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
+    padding: 12px; /* Cambio */
+    background-color: #007bff; /* Cambio */
     color: white;
     border: none;
-    font-weight: bold;
-    border-radius: 5px;
+    font-weight: 600; /* Cambio */
+    border-radius: 6px; /* Cambio */
     cursor: pointer;
+    transition: background-color 0.3s; /* Cambio */
 }
 
 .login-container button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Cambio */
 }

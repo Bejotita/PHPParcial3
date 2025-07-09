@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: #f8f9fa; /* Cambio */
+    color: #212529; /* Cambio */
     padding: 20px;
 }
 
@@ -19,13 +19,13 @@ body {
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid #dee2e6; /* Cambio */
 }
 
 .usuario-info {
     font-weight: 600;
     font-size: 1.1rem;
-    color: #222;
+    color: #212529; /* Cambio */
 }
 
 nav a {
@@ -49,7 +49,7 @@ nav a:hover {
 }
 
 .btn-cerrar:hover {
-    background-color: #a71d2a;
+    background-color: #c82333; /* Cambio */
 }
 
 /* Título principal */
@@ -66,10 +66,10 @@ nav a:hover {
     max-width: 960px;
     margin: 0 auto 50px auto;
     border-collapse: collapse;
-    background-color: white;
+    background-color: #ffffff; /* Cambio */
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Cambio */
 }
 
 .tabla-noticias thead {
@@ -80,12 +80,12 @@ nav a:hover {
 
 .tabla-noticias th, .tabla-noticias td {
     padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dee2e6; /* Cambio */
     text-align: left;
 }
 
 .tabla-noticias tbody tr:hover {
-    background-color: #f1f7ff;
+    background-color: #f1f1f1; /* Cambio */
 }
 
 /* Miniaturas */
@@ -102,7 +102,7 @@ nav a:hover {
 }
 
 .sin-imagen {
-    color: #777;
+    color: #6c757d; /* Cambio */
     font-style: italic;
     font-size: 0.9rem;
 }
@@ -130,14 +130,14 @@ nav a:hover {
 }
 
 .td-acciones a:hover {
-    filter: brightness(0.85);
+    filter: brightness(0.9); /* Cambio */
 }
 
 /* Mensaje de no noticias */
 .no-noticias {
     text-align: center;
     font-size: 1.2rem;
-    color: #555;
+    color: #6c757d; /* Cambio */
     margin-top: 40px;
 }
 
@@ -163,12 +163,12 @@ nav a:hover {
 
     .tabla-noticias tbody tr {
         margin-bottom: 20px;
-        border-bottom: 2px solid #ddd;
+        border-bottom: 2px solid #dee2e6; /* Cambio */
         display: block;
         padding: 10px;
-        background-color: white;
+        background-color: #ffffff; /* Cambio */
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Cambio */
     }
 
     .tabla-noticias tbody tr td {
@@ -186,7 +186,7 @@ nav a:hover {
 
 .btn-regresar {
     display: inline-block;
-    background-color: #7f8c8d;
+    background-color: #6c757d; /* Cambio */
     color: white;
     padding: 8px 14px;
     border-radius: 5px;
@@ -197,11 +197,11 @@ nav a:hover {
 }
 
 .btn-regresar:hover {
-    background-color: #636e72;
+    background-color: #5a6268; /* Cambio */
 }
 
 .btn-eliminar {
-    background-color: #e74c3c;  /* rojo fuerte */
+    background-color: #dc3545; /* Cambio */
     color: white;
     border: none;
     padding: 8px 14px;
@@ -212,5 +212,5 @@ nav a:hover {
 }
 
 .btn-eliminar:hover {
-    background-color: #c0392b; /* rojo más oscuro al pasar el mouse */
+    background-color: #c82333; /* Cambio */
 }

@@ -49,6 +49,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
         <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'editor'): ?>
             <a class="boton" href="Vistas/formulario_noticia.php">Crear Nueva Noticia</a>
         <?php endif; ?>
+        <a class="boton" href="Vistas/cambiar_contrasena.php">Cambiar contraseña</a>
         <a class="boton" href="logout.php">Cerrar sesión</a>
     </nav>
 </header>

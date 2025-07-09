@@ -59,8 +59,8 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
             <?php foreach ($noticias as $noticia): ?>
                 <tr>
                     <td class="td-imagen">
-                        <?php if (!empty($noticia['ruta_thumb']) && file_exists('../imagenes/thumbs/' . $noticia['ruta_thumb'])): ?>
-                            <img src="../imagenes/thumbs/<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura" class="thumb">
+                        <?php if (!empty($noticia['ruta_thumb']) && file_exists('../' . $noticia['ruta_thumb'])): ?>
+                            <img src="../<?= htmlspecialchars($noticia['ruta_thumb']) ?>" alt="Miniatura" class="thumb">
                         <?php else: ?>
                             <span class="sin-imagen">Sin imagen</span>
                         <?php endif; ?>

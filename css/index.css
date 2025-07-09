@@ -8,8 +8,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f7fa;
-    color: #2c3e50;
+    background-color: #f8f9fa; /* Cambio */
+    color: #212529; /* Cambio */
     padding: 20px;
 }
 
@@ -33,7 +33,7 @@ body {
 }
 
 .boton {
-    background-color: #2980b9;
+    background-color: #007bff; /* Cambio */
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
@@ -44,7 +44,7 @@ body {
 }
 
 .boton:hover {
-    background-color: #1c5980;
+    background-color: #0056b3; /* Cambio */
 }
 
 .contenido {
@@ -66,9 +66,10 @@ body {
 }
 
 .noticia {
-    background-color: #fff;
+    background-color: #ffffff; /* Cambio */
+    border: 1px solid #dee2e6; /* Añadido */
     border-radius: 10px;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.05); /* Cambio */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -87,12 +88,12 @@ body {
     font-size: 1.2rem;
     margin-bottom: 8px;
     font-weight: 700;
-    color: #333;
+    color: #212529; /* Cambio */
 }
 
 .noticia-date {
     font-size: 0.9rem;
-    color: #777;
+    color: #6c757d; /* Cambio */
     margin-bottom: 15px;
 }
 
@@ -116,23 +117,27 @@ body {
 }
 
 .btn-ver {
-    background-color: #2980b9;
+    background-color: #007bff; /* Cambio */
 }
 
 .btn-ver:hover {
-    background-color: #1c5980;
+    background-color: #0056b3; /* Cambio */
 }
 
 .btn-eliminar {
-    background-color: #e74c3c;
+    background-color: #dc3545; /* Cambio */
     border: none;
 }
 
 .btn-eliminar:hover {
-    background-color: #b43121;
+    background-color: #c82333; /* Cambio */
 }
 
 .form-eliminar {
     flex: 1;
     margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit; /* Cambio */
 }

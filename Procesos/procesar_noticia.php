@@ -95,6 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error al guardar la noticia.";
     }
 } else {
-    header('Location: form_noticia.php');
+    header('Location: formulario_noticia.php');
     exit();
 }

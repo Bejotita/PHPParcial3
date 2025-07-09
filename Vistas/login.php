@@ -1,7 +1,14 @@
 <?php
 session_start();
+if (!empty($_SESSION['errores_usuario'])) {
+    foreach ($_SESSION['errores_usuario'] as $error) {
+        echo "<div class='alert-error'>{$error}</div>";
+    }
+    unset($_SESSION['errores_usuario']);
+    exit; // Detiene la ejecución del resto del código
+}
 if (isset($_SESSION['usuario'])) {
-    header('Location: vistas/lista_noticias.php');
+    header('Location: ../Vistas/lista_noticias.php');
     exit();
 }
 ?>
