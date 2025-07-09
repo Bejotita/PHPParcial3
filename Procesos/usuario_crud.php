@@ -21,21 +21,20 @@ switch ($accion) {
         $rol     = isset($_POST['rol']) ? $_POST['rol'] : 'editor';
 
         if (!Validaciones::usuarioValido($usuario)) {
-            $errores[] = "Usuario inválido (4-20 caracteres alfanuméricos).";
+            $errores[] = "Usuario inválido.";
         }
-
         if (!Validaciones::claveSegura($clave)) {
-            $errores[] = "La contraseña debe tener mínimo 8 caracteres y contener letras y números.";
+            $errores[] = "Contraseña no segura.";
         }
-
         if (!Validaciones::rolValido($rol)) {
-            $errores[] = "Rol inválido.";
+            $errores[] = "Rol no válido.";
         }
 
         if (empty($errores)) {
             $exito = $usuarioObj->registrar($usuario, $clave, $rol);
         }
         break;
+
 
     case 'actualizar':
         $id      = isset($_POST['id']) ? $_POST['id'] : '';

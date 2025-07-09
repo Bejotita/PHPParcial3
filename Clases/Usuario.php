@@ -28,23 +28,14 @@ class Usuario {
      * Registrar un nuevo usuario, retorna true o mensaje de error
      */
     public function registrar($usuario, $clave, $rol = 'editor') {
-        if (empty($usuario) || empty($clave)) {
-            return "Usuario o clave vacíos";
-        }
-
-        if ($this->existeUsuario($usuario)) {
-            return "El nombre de usuario ya existe";
-        }
+        if (empty($usuario) || empty($clave)) return false;
 
         $hashClave = password_hash($clave, PASSWORD_BCRYPT);
-
         $sql = "INSERT INTO usuarios (usuario, clave, rol, activo) VALUES (?, ?, ?, 1)";
         $stmt = $this->pdo->prepare($sql);
-        if ($stmt->execute([$usuario, $hashClave, $rol])) {
-            return true;
-        }
-        return "Error al registrar usuario";
+        return $stmt->execute([$usuario, $hashClave, $rol]);
     }
+
 
     /**
      * Autenticar usuario activo
