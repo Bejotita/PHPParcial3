@@ -77,12 +77,12 @@ switch ($accion) {
         break;
 
     case 'activar':
-        $id = isset($_POST['id']) ? $_POST['id'] : '';
+        $id = isset($_POST['id_usuario']) ? $_POST['id_usuariox'] : '';
         $exito = $usuarioObj->activar($id);
         break;
 
     case 'desactivar':
-        $id = isset($_POST['id']) ? $_POST['id'] : '';
+        $id = isset($_POST['id_usuario']) ? $_POST['id_usuario'] : '';
         $exito = $usuarioObj->desactivar($id);
         break;
 

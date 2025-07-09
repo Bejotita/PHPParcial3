@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: vistas/login.php');
+    header('Location: Vistas/login.php');
     exit();
 }
 
@@ -48,6 +48,9 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
     <nav class="botones-derecha">
         <?php if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'editor'): ?>
             <a class="boton" href="Vistas/formulario_noticia.php">Crear Nueva Noticia</a>
+        <?php endif; ?>
+        <?php if ($_SESSION['rol'] === 'admin'): ?>
+            <a class="boton" href="Vistas/gestionar_usuarios.php">Gestionar usuarios</a>
         <?php endif; ?>
         <a class="boton" href="Vistas/cambiar_contrasena.php">Cambiar contraseña</a>
         <a class="boton" href="logout.php">Cerrar sesión</a>

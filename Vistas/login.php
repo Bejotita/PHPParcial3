@@ -1,3 +1,12 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login - Administración Noticias</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
 <?php
 session_start();
 if (!empty($_SESSION['errores_usuario'])) {
@@ -8,19 +17,10 @@ if (!empty($_SESSION['errores_usuario'])) {
     exit; // Detiene la ejecución del resto del código
 }
 if (isset($_SESSION['usuario'])) {
-    header('Location: ../Vistas/lista_noticias.php');
+    header('Location: ../index.php');
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <title>Login - Administración Noticias</title>
-    <link rel="stylesheet" href="../css/login.css">
-</head>
-<body>
-
 <div class="login-container">
     <h2>Iniciar Sesión</h2>
     <?php
