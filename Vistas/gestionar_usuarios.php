@@ -9,7 +9,7 @@ require_once '../Clases/Conexion.php';
 require_once '../Clases/Usuario.php';
 
 $usuarioObj = new Usuario();
-$usuarios = $usuarioObj->listarTodos(); // Debes tener este método en tu clase Usuario
+$usuarios = $usuarioObj->listarTodos();
 
 $mensaje = isset($_SESSION['mensaje']) ? $_SESSION['mensaje'] : null;
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
