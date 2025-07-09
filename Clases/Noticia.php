@@ -54,4 +54,3 @@ class Noticia {
         return $this->pdo->query($sql)->fetchColumn();
     }
 }
-?>

@@ -80,4 +80,3 @@ class Imagen {
         return true;
     }
 }
-?>
